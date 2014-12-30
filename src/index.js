@@ -10,6 +10,12 @@ let TYPES = {
     return schema;
   },
 
+  date: (schema, joi) => {
+    schema.type = 'string';
+    schema.format = 'date-time';
+    return schema;
+  },
+
   array: (schema, joi) => {
     schema.type = 'array';
     return schema;
@@ -30,6 +36,9 @@ let TYPES = {
 
     for (let test of joi._tests) {
       switch (test.name) {
+        case 'regex':
+          schema.pattern = String(test.arg);
+          break;
         case 'length':
           schema.maxLength = test.arg;
           break;

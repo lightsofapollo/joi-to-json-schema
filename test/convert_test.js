@@ -101,4 +101,19 @@ suite('convert', function() {
       maxLength: 5
     });
   });
+
+  test('date', function() {
+    assert.deepEqual(convert(Joi.date()), {
+      type: 'string',
+      format: 'date-time'
+    });
+  });
+
+  test('string regex -> pattern', function() {
+    let joi = Joi.string().regex(/^[a-z]$/);
+    assert.deepEqual(convert(joi), {
+      type: 'string',
+      pattern: '/^[a-z]$/'
+    });
+  });
 });

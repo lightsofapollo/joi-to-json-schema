@@ -1,0 +1,31 @@
+{
+  "name": "joi-to-json-schema",
+  "version": "1.0.0",
+  "description": "Joi -> JSON SChema",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "6to5 -s -e src --out-dir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightsofapollo/joi-to-json-schema.git"
+  },
+  "keywords": [
+    "joi",
+    "json-schema",
+    "json",
+    "schema"
+  ],
+  "author": "James Lal [:lightsofapollo]",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightsofapollo/joi-to-json-schema/issues"
+  },
+  "homepage": "https://github.com/lightsofapollo/joi-to-json-schema",
+  "devDependencies": {
+    "6to5": "^2.2.0",
+    "joi": "^5.0.2",
+    "mocha": "^2.1.0"
+  }
+}

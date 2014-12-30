@@ -77,8 +77,14 @@ let TYPES = {
         case 'regex':
           schema.pattern = String(test.arg);
           break;
-        case 'length':
+        case 'min':
+          schema.minLength = test.arg;
+          break;
+        case 'max':
           schema.maxLength = test.arg;
+          break;
+        case 'length':
+          schema.minLength = schema.maxLength = test.arg;
           break;
       }
     }

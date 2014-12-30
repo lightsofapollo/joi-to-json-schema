@@ -95,10 +95,19 @@ suite('convert', function() {
     });
   });
 
+  test('string min/max', function() {
+    assert.deepEqual(convert(Joi.string().min(5).max(100)), {
+      type: 'string',
+      minLength: 5,
+      maxLength: 100
+    });
+  });
+
   test('string -> maxLength', function() {
     assert.deepEqual(convert(Joi.string().length(5)), {
       type: 'string',
-      maxLength: 5
+      maxLength: 5,
+      minLength: 5
     });
   });
 

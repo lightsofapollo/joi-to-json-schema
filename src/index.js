@@ -3,10 +3,9 @@ import assert from 'assert';
 // Converter helpers for Joi types.
 let TYPES = {
   alternatives: (schema, joi) => {
-    schema.oneOf = [];
-    for (let match of joi._inner.matches) {
-      schema.oneOf.push(convert(match.schema));
-    }
+    schema.oneOf = joi._inner.matches.map((match) => {
+      return convert(match.schema);
+    });
     return schema;
   },
 
@@ -18,7 +17,8 @@ let TYPES = {
 
   array: (schema, joi) => {
     schema.type = 'array';
-    for (let test of joi._tests) {
+
+    joi._tests.forEach((test) => {
       switch (test.name) {
         case 'unique':
           schema.uniqueItems = true;
@@ -33,7 +33,7 @@ let TYPES = {
           schema.maxItems = test.arg;
           break;
       }
-    }
+    });
 
     return schema;
   },
@@ -45,7 +45,7 @@ let TYPES = {
 
   number: (schema, joi) => {
     schema.type = 'number';
-    for (let test of joi._tests) {
+    joi._tests.forEach((test) => {
       switch (test.name) {
         case 'integer':
           schema.type = 'integer';
@@ -65,14 +65,14 @@ let TYPES = {
           schema.maximum = test.arg;
           break;
       }
-    }
+    });
     return schema;
   },
 
   string: (schema, joi) => {
     schema.type = 'string';
 
-    for (let test of joi._tests) {
+    joi._tests.forEach((test) => {
       switch (test.name) {
         case 'email':
           schema.format = 'email';
@@ -90,7 +90,7 @@ let TYPES = {
           schema.minLength = schema.maxLength = test.arg;
           break;
       }
-    }
+    });
 
     return schema;
   },
@@ -103,13 +103,13 @@ let TYPES = {
 
     if (!joi._inner.children) return schema;
 
-    for (let property of joi._inner.children) {
+    joi._inner.children.forEach((property) => {
       schema.properties[property.key] = convert(property.schema);
       if (property.schema._flags.presence === 'required') {
         schema.required = schema.required || [];
         schema.required.push(property.key);
       }
-    }
+    });
 
     return schema;
   }

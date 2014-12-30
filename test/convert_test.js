@@ -160,4 +160,12 @@ suite('convert', function() {
       maxItems: 100
     });
   });
+
+  test('array unique', function() {
+    let joi = Joi.array().unique();
+    assert.deepEqual(convert(joi), {
+      type: 'array',
+      uniqueItems: true
+    });
+  });
 });

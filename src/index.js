@@ -20,6 +20,9 @@ let TYPES = {
     schema.type = 'array';
     for (let test of joi._tests) {
       switch (test.name) {
+        case 'unique':
+          schema.uniqueItems = true;
+          break;
         case 'length':
           schema.minItems = schema.maxItems = test.arg;
           break;

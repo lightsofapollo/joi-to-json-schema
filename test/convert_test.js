@@ -142,4 +142,22 @@ suite('convert', function() {
       type: 'integer'
     });
   });
+
+  test('array min/max', function() {
+    let joi = Joi.array().min(5).max(100);
+    assert.deepEqual(convert(joi), {
+      type: 'array',
+      minItems: 5,
+      maxItems: 100
+    });
+  });
+
+  test('array length', function() {
+    let joi = Joi.array().length(100);
+    assert.deepEqual(convert(joi), {
+      type: 'array',
+      minItems: 100,
+      maxItems: 100
+    });
+  });
 });

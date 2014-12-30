@@ -18,6 +18,20 @@ let TYPES = {
 
   array: (schema, joi) => {
     schema.type = 'array';
+    for (let test of joi._tests) {
+      switch (test.name) {
+        case 'length':
+          schema.minItems = schema.maxItems = test.arg;
+          break;
+        case 'min':
+          schema.minItems = test.arg;
+          break;
+        case 'max':
+          schema.maxItems = test.arg;
+          break;
+      }
+    }
+
     return schema;
   },
 

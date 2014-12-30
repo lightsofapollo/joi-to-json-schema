@@ -94,4 +94,11 @@ suite('convert', function() {
       }
     });
   });
+
+  test('string -> maxLength', function() {
+    assert.deepEqual(convert(Joi.string().length(5)), {
+      type: 'string',
+      maxLength: 5
+    });
+  });
 });

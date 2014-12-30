@@ -27,6 +27,15 @@ let TYPES = {
 
   string: (schema, joi) => {
     schema.type = 'string';
+
+    for (let test of joi._tests) {
+      switch (test.name) {
+        case 'length':
+          schema.maxLength = test.arg;
+          break;
+      }
+    }
+
     return schema;
   },
 

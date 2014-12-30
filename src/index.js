@@ -74,6 +74,9 @@ let TYPES = {
 
     for (let test of joi._tests) {
       switch (test.name) {
+        case 'email':
+          schema.format = 'email';
+          break;
         case 'regex':
           schema.pattern = String(test.arg);
           break;

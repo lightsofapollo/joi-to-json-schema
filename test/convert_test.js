@@ -111,6 +111,13 @@ suite('convert', function() {
     });
   });
 
+  test('string email', function() {
+    assert.deepEqual(convert(Joi.string().email()), {
+      type: 'string',
+      format: 'email'
+    });
+  });
+
   test('date', function() {
     assert.deepEqual(convert(Joi.date()), {
       type: 'string',

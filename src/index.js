@@ -28,9 +28,11 @@ let TYPES = {
 
   number: (schema, joi) => {
     schema.type = 'number';
-    //console.log(joi)
     for (let test of joi._tests) {
       switch (test.name) {
+        case 'integer':
+          schema.type = 'integer';
+          break;
         case 'less':
           schema.exclusiveMaximum = true;
           schema.maximum = test.arg;

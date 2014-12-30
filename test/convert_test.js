@@ -136,4 +136,10 @@ suite('convert', function() {
       exclusiveMaximum: true
     });
   });
+
+  test('integer', function() {
+    assert.deepEqual(convert(Joi.number().integer()), {
+      type: 'integer'
+    });
+  });
 });

@@ -2,6 +2,14 @@ import assert from 'assert';
 
 // Converter helpers for Joi types.
 let TYPES = {
+  alternatives: (schema, joi) => {
+    schema.oneOf = [];
+    for (let match of joi._inner.matches) {
+      schema.oneOf.push(convert(match.schema));
+    }
+    return schema;
+  },
+
   array: (schema, joi) => {
     schema.type = 'array';
     return schema;
@@ -53,6 +61,10 @@ export default function convert(joi) {
   if (joi._description) schema.description = joi._description;
   if (joi._flags && joi._flags.default) {
     schema.default = joi._flags.default;
+  }
+
+  if (joi._valids && joi._valids._set && joi._valids._set.length) {
+    schema.enum = joi._valids._set;
   }
 
   return TYPES[joi._type](schema, joi);

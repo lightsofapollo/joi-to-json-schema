@@ -28,6 +28,16 @@ let TYPES = {
 
   number: (schema, joi) => {
     schema.type = 'number';
+    for (let test of joi._tests) {
+      switch (test.name) {
+        case 'min':
+          schema.minimum = test.arg;
+          break;
+        case 'max':
+          schema.maximum = test.arg;
+          break;
+      }
+    }
     return schema;
   },
 

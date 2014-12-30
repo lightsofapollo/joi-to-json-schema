@@ -116,4 +116,13 @@ suite('convert', function() {
       pattern: '/^[a-z]$/'
     });
   });
+
+  test('number min/max', function() {
+    let joi = Joi.number().min(0).max(100);
+    assert.deepEqual(convert(joi), {
+      type: 'number',
+      minimum: 0,
+      maximum: 100
+    });
+  });
 });

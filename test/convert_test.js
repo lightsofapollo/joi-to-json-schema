@@ -125,4 +125,15 @@ suite('convert', function() {
       maximum: 100
     });
   });
+
+  test('number greater/less', function() {
+    let joi = Joi.number().greater(0).less(100);
+    assert.deepEqual(convert(joi), {
+      type: 'number',
+      minimum: 0,
+      exclusiveMinimum: true,
+      maximum: 100,
+      exclusiveMaximum: true
+    });
+  });
 });

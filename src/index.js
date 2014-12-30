@@ -28,8 +28,17 @@ let TYPES = {
 
   number: (schema, joi) => {
     schema.type = 'number';
+    //console.log(joi)
     for (let test of joi._tests) {
       switch (test.name) {
+        case 'less':
+          schema.exclusiveMaximum = true;
+          schema.maximum = test.arg;
+          break;
+        case 'greater':
+          schema.exclusiveMinimum = true;
+          schema.minimum = test.arg;
+          break;
         case 'min':
           schema.minimum = test.arg;
           break;

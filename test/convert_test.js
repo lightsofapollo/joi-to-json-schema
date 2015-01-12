@@ -50,7 +50,7 @@ suite('convert', function() {
         },
         'string default': {
           type: 'string',
-          default: 'bar',
+          "default": 'bar',
           description: 'bar desc'
         },
         'number': {
@@ -73,7 +73,7 @@ suite('convert', function() {
   test('enum', function() {
     assert.deepEqual(convert(Joi.string().valid(['a', 'b'])), {
       type: 'string',
-      enum: ['a', 'b']
+      "enum": ['a', 'b']
     });
   });
 
@@ -91,8 +91,8 @@ suite('convert', function() {
       properties: {
         value: {
           oneOf: [
-            { type: 'string', enum: ['a'] },
-            { type: 'number', enum: [100] },
+            { type: 'string', "enum": ['a'] },
+            { type: 'number', "enum": [100] }
           ]
         }
       }

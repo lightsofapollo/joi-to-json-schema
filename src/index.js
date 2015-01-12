@@ -16,7 +16,14 @@ let TYPES = {
   },
   
   any: (schema, joi) => {
-    schema.type = 'any';
+    schema.type = [
+      "array",
+      "boolean",
+      'number',
+      "object",
+      'string',
+      "null"
+    ];
     return schema;
   },
 

@@ -120,7 +120,9 @@ let TYPES = {
     schema.additionalProperties = joi._flags.allowUnknown || false;
 
 
-    if (!joi._inner.children) return schema;
+    if (!joi._inner.children) {
+      return schema;
+    }
 
     joi._inner.children.forEach((property) => {
       schema.properties[property.key] = convert(property.schema);
@@ -142,7 +144,10 @@ export default function convert(joi) {
   let schema = {};
 
   // Copy over the details that all schemas may have...
-  if (joi._description) schema.description = joi._description;
+  if (joi._description) {
+    schema.description = joi._description;
+  }
+  
   if (joi._flags && joi._flags.default) {
     schema.default = joi._flags.default;
   }

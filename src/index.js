@@ -97,7 +97,7 @@ let TYPES = {
           schema.format = 'email';
           break;
         case 'regex':
-          schema.pattern = String(test.arg);
+          schema.pattern = String(test.arg).replace(/^\/','').replace(/\/$/,'');
           break;
         case 'min':
           schema.minLength = test.arg;

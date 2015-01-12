@@ -46,8 +46,8 @@ let TYPES = {
           break;
       }
     });
-    
-    if (joi._inner && joi._inner.inclusions) {
+
+    if (joi._inner && joi._inner.inclusions && joi._inner.inclusions.length>0) {
       schema.items = schema.items || [];
       joi._inner.inclusions.forEach((i)=> {
         schema.items.push(convert(i));

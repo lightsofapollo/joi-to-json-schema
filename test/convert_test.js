@@ -1,6 +1,10 @@
-import * as Joi from 'Joi';
-import convert from '../src/index';
-import assert from 'assert';
+//import * as Joi from 'Joi';
+//import convert from '../src/index';
+//import assert from 'assert';
+
+var Joi=require('joi'),
+    convert=require('../src/index'),
+    assert=require('assert');
 
 suite('convert', function() {
 
@@ -34,7 +38,7 @@ suite('convert', function() {
       string: Joi.string(),
       'string default': Joi.string().default('bar').description('bar desc'),
       'number': Joi.number(),
-      'boolean required': Joi.boolean().required(),
+      'boolean required': Joi.boolean().required()
     });
 
     assert.deepEqual(convert(obj), {
@@ -129,7 +133,7 @@ suite('convert', function() {
     let joi = Joi.string().regex(/^[a-z]$/);
     assert.deepEqual(convert(joi), {
       type: 'string',
-      pattern: '/^[a-z]$/'
+      pattern: '^[a-z]$'
     });
   });
 

@@ -1,7 +1,3 @@
-//import * as Joi from 'Joi';
-//import convert from '../src/index';
-//import assert from 'assert';
-
 var Joi = require('joi'),
     convert = require('../src/index'),
     assert = require('assert');
@@ -211,51 +207,50 @@ suite('convert', function () {
   });
 
   test('big and complicated', function () {
-
-    var joi = Joi.object({
-          aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),
-          aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
-          anInt: Joi.number().required().precision(0).greater(0),
-          anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
-          anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
-        }),
-        expected = {
-          type: 'object',
-          properties: {
-            aFormattedString: {
-              type: 'string',
-              pattern: '^[ABC]_\\w+$'
-            },
-            aFloat: {
-              default: 0.8,
-              type: 'number',
-              minimum: 0,
-              maximum: 1
-            },
-            anInt: {
-              type: 'number',
-              exclusiveMinimum: true,
-              minimum: 0
-            },
-            anArrayOfFloats: {
-              type: 'array',
-              items: [
-                {
-                  default: 0.8,
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 1
-                }
-              ]
-            },
-            anArrayOfNumbersOrStrings: {
-              type: 'array',
-              items: [{oneOf: [{type: 'number'}, {type: 'string'}]}]
-            }
+    let joi = Joi.object({
+        aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),
+        aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
+        anInt: Joi.number().required().precision(0).greater(0),
+        anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
+        anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
+      }),
+      expected = {
+        type: 'object',
+        properties: {
+          aFormattedString: {
+            type: 'string',
+            pattern: '^[ABC]_\\w+$'
           },
-          additionalProperties: false,
-          required: ['anInt']
-        };
+          aFloat: {
+            default: 0.8,
+            type: 'number',
+            minimum: 0,
+            maximum: 1
+          },
+          anInt: {
+            type: 'number',
+            exclusiveMinimum: true,
+            minimum: 0
+          },
+          anArrayOfFloats: {
+            type: 'array',
+            items: [
+              {
+                default: 0.8,
+                type: 'number',
+                minimum: 0,
+                maximum: 1
+              }
+            ]
+          },
+          anArrayOfNumbersOrStrings: {
+            type: 'array',
+            items: [{oneOf: [{type: 'number'}, {type: 'string'}]}]
+          }
+        },
+        additionalProperties: false,
+        required: ['anInt']
+      };
     assert.deepEqual(convert(joi),expected);
   });
 

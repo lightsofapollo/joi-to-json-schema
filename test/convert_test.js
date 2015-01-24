@@ -1,10 +1,10 @@
-import * as Joi from 'Joi';
-import convert from '../src/index';
-import assert from 'assert';
+var Joi = require('joi'),
+    convert = require('../src/index'),
+    assert = require('assert');
 
-suite('convert', function() {
+suite('convert', function () {
 
-  test('object defaults', function() {
+  test('object defaults', function () {
     assert.deepEqual(convert(Joi.object()), {
       type: 'object',
       properties: {},
@@ -12,7 +12,7 @@ suite('convert', function() {
     });
   });
 
-  test('object description', function() {
+  test('object description', function () {
     assert.deepEqual(convert(Joi.object().description('woot')), {
       type: 'object',
       properties: {},
@@ -21,7 +21,7 @@ suite('convert', function() {
     });
   });
 
-  test('object allow unknown', function() {
+  test('object allow unknown', function () {
     assert.deepEqual(convert(Joi.object().unknown(true)), {
       type: 'object',
       properties: {},
@@ -29,12 +29,12 @@ suite('convert', function() {
     });
   });
 
-  test('object', function() {
+  test('object', function () {
     let obj = Joi.object().keys({
       string: Joi.string(),
       'string default': Joi.string().default('bar').description('bar desc'),
       'number': Joi.number(),
-      'boolean required': Joi.boolean().required(),
+      'boolean required': Joi.boolean().required()
     });
 
     assert.deepEqual(convert(obj), {
@@ -46,7 +46,7 @@ suite('convert', function() {
         },
         'string default': {
           type: 'string',
-          default: 'bar',
+          "default": 'bar',
           description: 'bar desc'
         },
         'number': {
@@ -60,24 +60,24 @@ suite('convert', function() {
     });
   });
 
-  test('type: array', function() {
+  test('type: array', function () {
     assert.deepEqual(convert(Joi.array()), {
       type: 'array'
     });
   });
 
-  test('enum', function() {
+  test('enum', function () {
     assert.deepEqual(convert(Joi.string().valid(['a', 'b'])), {
       type: 'string',
-      enum: ['a', 'b']
+      "enum": ['a', 'b']
     });
   });
 
-  test('alternatives -> oneOf', function() {
+  test('alternatives -> oneOf', function () {
     let joi = Joi.object().keys({
       value: Joi.alternatives().try(
-        Joi.string().valid('a'),
-        Joi.number().valid(100)
+          Joi.string().valid('a'),
+          Joi.number().valid(100)
       )
     });
 
@@ -87,15 +87,21 @@ suite('convert', function() {
       properties: {
         value: {
           oneOf: [
-            { type: 'string', enum: ['a'] },
-            { type: 'number', enum: [100] },
+            {
+              type: 'string',
+              "enum": ['a']
+            },
+            {
+              type: 'number',
+              "enum": [100]
+            }
           ]
         }
       }
     });
   });
 
-  test('string min/max', function() {
+  test('string min/max', function () {
     assert.deepEqual(convert(Joi.string().min(5).max(100)), {
       type: 'string',
       minLength: 5,
@@ -103,7 +109,7 @@ suite('convert', function() {
     });
   });
 
-  test('string -> maxLength', function() {
+  test('string -> maxLength', function () {
     assert.deepEqual(convert(Joi.string().length(5)), {
       type: 'string',
       maxLength: 5,
@@ -111,29 +117,29 @@ suite('convert', function() {
     });
   });
 
-  test('string email', function() {
+  test('string email', function () {
     assert.deepEqual(convert(Joi.string().email()), {
       type: 'string',
       format: 'email'
     });
   });
 
-  test('date', function() {
+  test('date', function () {
     assert.deepEqual(convert(Joi.date()), {
       type: 'string',
       format: 'date-time'
     });
   });
 
-  test('string regex -> pattern', function() {
+  test('string regex -> pattern', function () {
     let joi = Joi.string().regex(/^[a-z]$/);
     assert.deepEqual(convert(joi), {
       type: 'string',
-      pattern: '/^[a-z]$/'
+      pattern: '^[a-z]$'
     });
   });
 
-  test('number min/max', function() {
+  test('number min/max', function () {
     let joi = Joi.number().min(0).max(100);
     assert.deepEqual(convert(joi), {
       type: 'number',
@@ -142,7 +148,7 @@ suite('convert', function() {
     });
   });
 
-  test('number greater/less', function() {
+  test('number greater/less', function () {
     let joi = Joi.number().greater(0).less(100);
     assert.deepEqual(convert(joi), {
       type: 'number',
@@ -153,13 +159,13 @@ suite('convert', function() {
     });
   });
 
-  test('integer', function() {
+  test('integer', function () {
     assert.deepEqual(convert(Joi.number().integer()), {
       type: 'integer'
     });
   });
 
-  test('array min/max', function() {
+  test('array min/max', function () {
     let joi = Joi.array().min(5).max(100);
     assert.deepEqual(convert(joi), {
       type: 'array',
@@ -168,7 +174,7 @@ suite('convert', function() {
     });
   });
 
-  test('array length', function() {
+  test('array length', function () {
     let joi = Joi.array().length(100);
     assert.deepEqual(convert(joi), {
       type: 'array',
@@ -177,11 +183,75 @@ suite('convert', function() {
     });
   });
 
-  test('array unique', function() {
+  test('array unique', function () {
     let joi = Joi.array().unique();
     assert.deepEqual(convert(joi), {
       type: 'array',
       uniqueItems: true
     });
   });
+
+  test('array inclusions', function () {
+    let joi = Joi.array().includes(Joi.string());
+    assert.deepEqual(convert(joi), {
+      type: 'array',
+      items: [{type: 'string'}]
+    });
+  });
+
+  test('joi any', function () {
+    let joi = Joi.any();
+    assert.deepEqual(convert(joi), {
+      type: ['array', 'boolean', 'number', 'object', 'string', 'null']
+    });
+  });
+
+  test('big and complicated', function () {
+    let joi = Joi.object({
+        aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),
+        aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
+        anInt: Joi.number().required().precision(0).greater(0),
+        anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
+        anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
+      }),
+      expected = {
+        type: 'object',
+        properties: {
+          aFormattedString: {
+            type: 'string',
+            pattern: '^[ABC]_\\w+$'
+          },
+          aFloat: {
+            default: 0.8,
+            type: 'number',
+            minimum: 0,
+            maximum: 1
+          },
+          anInt: {
+            type: 'number',
+            exclusiveMinimum: true,
+            minimum: 0
+          },
+          anArrayOfFloats: {
+            type: 'array',
+            items: [
+              {
+                default: 0.8,
+                type: 'number',
+                minimum: 0,
+                maximum: 1
+              }
+            ]
+          },
+          anArrayOfNumbersOrStrings: {
+            type: 'array',
+            items: [{oneOf: [{type: 'number'}, {type: 'string'}]}]
+          }
+        },
+        additionalProperties: false,
+        required: ['anInt']
+      };
+    assert.deepEqual(convert(joi),expected);
+  });
+
 });

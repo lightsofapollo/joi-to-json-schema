@@ -4,8 +4,10 @@
   "description": "Joi -> JSON SChema",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "6to5 -s -e src --out-dir build"
+    "build": "6to5 -s -e src --out-dir build",
+    "pretest":"npm run build",
+    "test": "mocha",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",

@@ -14,6 +14,18 @@ let TYPES = {
     schema.format = 'date-time';
     return schema;
   },
+  
+  any: (schema, joi) => {
+    schema.type = [
+      "array",
+      "boolean",
+      'number',
+      "object",
+      'string',
+      "null"
+    ];
+    return schema;
+  },
 
   array: (schema, joi) => {
     schema.type = 'array';
@@ -34,6 +46,13 @@ let TYPES = {
           break;
       }
     });
+
+    if (joi._inner && joi._inner.inclusions && joi._inner.inclusions.length>0) {
+      schema.items = schema.items || [];
+      joi._inner.inclusions.forEach((i)=> {
+        schema.items.push(convert(i));
+      });
+    }
 
     return schema;
   },
@@ -78,7 +97,7 @@ let TYPES = {
           schema.format = 'email';
           break;
         case 'regex':
-          schema.pattern = String(test.arg);
+          schema.pattern = String(test.arg).replace(/^\//,'').replace(/\/$/,'');
           break;
         case 'min':
           schema.minLength = test.arg;
@@ -101,7 +120,9 @@ let TYPES = {
     schema.additionalProperties = joi._flags.allowUnknown || false;
 
 
-    if (!joi._inner.children) return schema;
+    if (!joi._inner.children) {
+      return schema;
+    }
 
     joi._inner.children.forEach((property) => {
       schema.properties[property.key] = convert(property.schema);
@@ -123,7 +144,10 @@ export default function convert(joi) {
   let schema = {};
 
   // Copy over the details that all schemas may have...
-  if (joi._description) schema.description = joi._description;
+  if (joi._description) {
+    schema.description = joi._description;
+  }
+  
   if (joi._flags && joi._flags.default) {
     schema.default = joi._flags.default;
   }

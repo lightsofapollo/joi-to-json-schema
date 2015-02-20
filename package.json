@@ -1,11 +1,11 @@
 {
   "name": "joi-to-json-schema",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Joi -> JSON SChema",
   "main": "build/index.js",
   "scripts": {
     "build": "6to5 -s -e src --out-dir build",
-    "pretest":"npm run build",
+    "pretest": "npm run build",
     "test": "mocha",
     "prepublish": "npm run build"
   },

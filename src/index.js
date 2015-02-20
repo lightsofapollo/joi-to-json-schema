@@ -32,13 +32,13 @@ let TYPES = {
     return schema;
   },
 
-  date: (schema, joi) => {
+  date: (schema) => {
     schema.type = 'string';
     schema.format = 'date-time';
     return schema;
   },
   
-  any: (schema, joi) => {
+  any: (schema) => {
     schema.type = [
       "array",
       "boolean",
@@ -80,7 +80,7 @@ let TYPES = {
     return schema;
   },
 
-  boolean: (schema, joi) => {
+  boolean: (schema) => {
     schema.type = 'boolean';
     return schema;
   },
@@ -160,6 +160,7 @@ let TYPES = {
 };
 
 export default function convert(joi) {
+
   assert('object'===typeof joi && true === joi.isJoi, 'requires a joi schema object');
   assert(joi._type, 'has type');
   assert(TYPES[joi._type], `cannot convert ${joi._type}`);
@@ -175,9 +176,23 @@ export default function convert(joi) {
   if (joi._flags && joi._flags.default) {
     schema.default = joi._flags.default;
   }
-
-  if (joi._valids && joi._valids._set && joi._valids._set.length) {
-    schema.enum = joi._valids._set;
+/*
+  if(joi._flags && joi._flags.allowOnly){
+    schema.enum = joi._valids._set
+  }*/
+  if (joi._valids && joi._valids._set && joi._valids._set.length){
+    if(Array.isArray(joi._inner.children)) {
+      return {
+        '------oneOf': [
+          {
+            'type': joi._type,
+            'enum': joi._valids._set
+          },
+          TYPES[joi._type](schema, joi)
+        ]
+      };
+    }
+    schema.enum=joi._valids._set;
   }
 
   return TYPES[joi._type](schema, joi);

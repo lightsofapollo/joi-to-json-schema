@@ -1,21 +1,60 @@
 # joi-to-json-schema
 
-The goal is to provide best effort conversion from Joi objects to json
-schema with the understanding that only some of the schematics can be
-converted. Primarily this exists to convert Joi schema objects to existing
-tools which happen to currently consume json schema.
+The goal is to provide best effort conversion from Joi objects to JSON
+Schema (draft-04) with the understanding that only some of Joi's schematics 
+can be converted directly. Primarily this module exists to convert Joi schema 
+objects for existing tools which happen to currently consume JSON Schema.
 
 ## Usage
 
 ```js
-var Joi = require('joi');
-var convert = require('joi-to-json-schema');
+var joi = require('joi'),
+    convert = require('joi-to-json-schema'),
+    joiSchema=joi.object({
+      'name':joi.string().required().regex(/^\w+$/),
+      'description':joi.string().optional().default('no description provided'),
+      'a': joi.boolean().required().default(false),
+      'b': joi.alternatives().when('a', {
+        is: true,
+        then: joi.string().default('a is true'),
+        otherwise: joi.number().default(0)
+      })
+    }),
 
-// Or whatever joi thing ...
-convert(Joi.string()); // => json schema
+    convert(joiSchema);
+```
+
+which will produce:
+
+```js
+{ type: 'object',
+  properties: 
+   { name: { type: 'string', pattern: '^\\w+$' },
+     description: { default: 'no description provided', type: 'string' },
+     a: { type: 'boolean' },
+     b: { oneOf: [ { default: 'a is true', type: 'string' }, { type: 'number' } ] } },
+  additionalProperties: false,
+  required: [ 'name', 'a' ] }
 ```
 
 See tests for current conversions and coverage.
+
+## Note
+
+Since JSON Schema has no analog for Joi's conditional form, i.e. `.when('name',{is:cond,then:joi,otherwise:joi})`,
+which is evaluated at runtime and there is no way of knowing, from the perspective of the schema, what the
+condition might resolve to, this module takes the position that it should provide both resolutions in a 
+JSON Schema `oneOf:[]` clause.
+
+## Testing
+
+All tests cases are first checked against expected results and then validated using [Kris Zyp's json-schema](https://github.com/kriszyp/json-schema)
+
+## References
+
+- [JSON Schema - Draft 4 from json-schema.org](http://json-schema.org/documentation.html)
+- [IETF Draft: JSON Schema: core definitions and terminology - draft-zyp-json-schema-04](https://tools.ietf.org/html/draft-zyp-json-schema-04)
+- [Understanding JSON Schema](http://spacetelescope.github.io/understanding-json-schema/UnderstandingJSONSchema.pdf)(pdf)
 
 ## LICENSE
 

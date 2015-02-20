@@ -1,6 +1,11 @@
-var Joi = require('joi'),
+//@formatter:off
+var Joi     = require('joi'),
     convert = require('../src/index'),
-    assert = require('assert');
+    assert  = require('assert');
+//@formatter:on
+
+/* jshint mocha:true */
+/* global suite, test */
 
 suite('convert', function () {
 
@@ -208,50 +213,78 @@ suite('convert', function () {
 
   test('big and complicated', function () {
     let joi = Joi.object({
-        aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),
-        aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
-        anInt: Joi.number().required().precision(0).greater(0),
-        anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
-        anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
-      }),
-      expected = {
-        type: 'object',
-        properties: {
-          aFormattedString: {
-            type: 'string',
-            pattern: '^[ABC]_\\w+$'
+          aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),
+          aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
+          anInt: Joi.number().required().precision(0).greater(0),
+          anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
+          anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
+        }),
+        expected = {
+          type: 'object',
+          properties: {
+            aFormattedString: {
+              type: 'string',
+              pattern: '^[ABC]_\\w+$'
+            },
+            aFloat: {
+              default: 0.8,
+              type: 'number',
+              minimum: 0,
+              maximum: 1
+            },
+            anInt: {
+              type: 'number',
+              exclusiveMinimum: true,
+              minimum: 0
+            },
+            anArrayOfFloats: {
+              type: 'array',
+              items: [
+                {
+                  default: 0.8,
+                  type: 'number',
+                  minimum: 0,
+                  maximum: 1
+                }
+              ]
+            },
+            anArrayOfNumbersOrStrings: {
+              type: 'array',
+              items: [{oneOf: [{type: 'number'}, {type: 'string'}]}]
+            }
           },
-          aFloat: {
-            default: 0.8,
-            type: 'number',
-            minimum: 0,
-            maximum: 1
+          additionalProperties: false,
+          required: ['anInt']
+        };
+    assert.deepEqual(convert(joi), expected);
+  });
+
+  test('joi.when', function () {
+    let joi = Joi.object({
+          'a': Joi.boolean().required().default(false),
+          'b': Joi.alternatives().when('a', {
+            is: true,
+            then: Joi.string().default('a is true'),
+            otherwise: Joi.number().default(0)
+          })
+        }),
+        expected = {
+          type: 'object',
+          properties: {
+            a: {type: 'boolean'},
+            b: {
+              oneOf: [
+                {
+                  default: 'a is true',
+                  type: 'string'
+                }, {type: 'number'}
+              ]
+            }
           },
-          anInt: {
-            type: 'number',
-            exclusiveMinimum: true,
-            minimum: 0
-          },
-          anArrayOfFloats: {
-            type: 'array',
-            items: [
-              {
-                default: 0.8,
-                type: 'number',
-                minimum: 0,
-                maximum: 1
-              }
-            ]
-          },
-          anArrayOfNumbersOrStrings: {
-            type: 'array',
-            items: [{oneOf: [{type: 'number'}, {type: 'string'}]}]
-          }
-        },
-        additionalProperties: false,
-        required: ['anInt']
-      };
-    assert.deepEqual(convert(joi),expected);
+          additionalProperties: false,
+          required: [ 'a' ]
+        };
+    assert.deepEqual(convert(joi), expected);
   });
 
 });

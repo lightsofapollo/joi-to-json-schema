@@ -1,0 +1,2 @@
+## [**2.0.0**](https://github.com/lightsofapollo/joi-to-json-schema/issues/2&state=closed)
+- [**#2**](https://github.com/lightsofapollo/joi-to-json-schema/issues/2) Added support for joi.forbidden() in object properties

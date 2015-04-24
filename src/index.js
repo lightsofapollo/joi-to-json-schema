@@ -148,10 +148,12 @@ let TYPES = {
     }
 
     joi._inner.children.forEach((property) => {
-      schema.properties[property.key] = convert(property.schema);
-      if (property.schema._flags.presence === 'required') {
-        schema.required = schema.required || [];
-        schema.required.push(property.key);
+      if(property.schema._flags.presence !== 'forbidden') {
+        schema.properties[property.key] = convert(property.schema);
+        if (property.schema._flags.presence === 'required') {
+          schema.required = schema.required || [];
+          schema.required.push(property.key);
+        }
       }
     });
 
@@ -159,11 +161,15 @@ let TYPES = {
   }
 };
 
-export default function convert(joi) {
+export default function convert(joi,transformer=null) {
 
   assert('object'===typeof joi && true === joi.isJoi, 'requires a joi schema object');
   assert(joi._type, 'has type');
   assert(TYPES[joi._type], `cannot convert ${joi._type}`);
+
+  if(transformer){
+    assert('function'===typeof transformer, 'transformer must be a function');
+  }
 
   // JSON Schema root for this type.
   let schema = {};
@@ -174,7 +180,7 @@ export default function convert(joi) {
   }
   
   if (joi._flags && joi._flags.default) {
-    schema.default = joi._flags.default;
+    schema['default'] = joi._flags.default;
   }
 /*
   if(joi._flags && joi._flags.allowOnly){
@@ -192,8 +198,14 @@ export default function convert(joi) {
         ]
       };
     }
-    schema.enum=joi._valids._set;
+    schema['enum']=joi._valids._set;
   }
 
-  return TYPES[joi._type](schema, joi);
+  let result = TYPES[joi._type](schema, joi);
+
+  if(transformer){
+    result = transformer(result);
+  }
+
+  return result;
 }

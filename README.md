@@ -37,14 +37,22 @@ which will produce:
   required: [ 'name', 'a' ] }
 ```
 
+## API
+
+`convert(schema:joiSchema[,transformer:Function]):object`
+
+If provided, the transformation function should be defined as: `transformer(obj:object):object`
+
 See tests for current conversions and coverage.
 
-## Note
+## Notes
 
-Since JSON Schema has no analog for Joi's conditional form, i.e. `.when('name',{is:cond,then:joi,otherwise:joi})`,
-which is evaluated at runtime and there is no way of knowing, from the perspective of the schema, what the
-condition might resolve to, this module takes the position that it should provide both resolutions in a 
-JSON Schema `oneOf:[]` clause.
+Joi's conditional form, i.e. `.when('name',{is:cond,then:joi,otherwise:joi})`, is evaluated at runtime 
+and since there is no way of knowing what the condition might resolve to, from the perspective of the schema, this 
+module takes the position that it should provide both resolutions in a JSON Schema `oneOf:[]` clause.
+
+Since this can lead to less than optimal constructions, a `transformer` argument can be provided to "clean up"
+any anomolous structure in the resulting JSON Schema object.
 
 ## Testing
 

@@ -63,6 +63,37 @@ suite('convert', function () {
           string: Joi.string(),
           'string default': Joi.string().default('bar').description('bar desc'),
           'number': Joi.number(),
+          'boolean': Joi.boolean()
+        }),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          properties: {
+            'string': {
+              type: 'string'
+            },
+            'string default': {
+              type: 'string',
+              'default': 'bar',
+              description: 'bar desc'
+            },
+            'number': {
+              type: 'number'
+            },
+            'boolean': {
+              type: 'boolean'
+            }
+          },
+          additionalProperties: false
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('object property required', function () {
+    let joi = Joi.object().keys({
+          string: Joi.string(),
+          'string default': Joi.string().default('bar').description('bar desc'),
+          'number': Joi.number(),
           'boolean required': Joi.boolean().required()
         }),
         schema = convert(joi),
@@ -80,6 +111,35 @@ suite('convert', function () {
             },
             'number': {
               type: 'number'
+            },
+            'boolean required': {
+              type: 'boolean'
+            }
+          },
+          additionalProperties: false
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('object property forbidden', function(){
+    let joi = Joi.object().keys({
+          string: Joi.string(),
+          'string default': Joi.string().default('bar').description('bar desc'),
+          'number forbidden': Joi.number().forbidden(),
+          'boolean required': Joi.boolean().required()
+        }),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          required: ['boolean required'],
+          properties: {
+            'string': {
+              type: 'string'
+            },
+            'string default': {
+              type: 'string',
+              'default': 'bar',
+              description: 'bar desc'
             },
             'boolean required': {
               type: 'boolean'

@@ -354,6 +354,7 @@ suite('convert', function () {
           aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),
           aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
           anInt: Joi.number().required().precision(0).greater(0),
+          aForbiddenString: Joi.string().forbidden(),
           anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
           anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
         }),
@@ -396,6 +397,20 @@ suite('convert', function () {
           required: ['anInt']
         };
     assert.validate(schema, expected);
+
+    // now make it fail
+    expected.properties.aForbiddenString={type:'string'};
+
+    try {
+      assert.validate(schema,expected);
+    }
+    catch(e){
+      console.warn(e);
+      if(e.name !== 'AssertionError' && e.operator !== 'deepEqual'){
+        throw e;
+      }
+    }
+
   });
 
   test('joi.when', function () {

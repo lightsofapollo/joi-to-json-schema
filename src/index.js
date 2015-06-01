@@ -1,6 +1,7 @@
 import assert from 'assert';
 
 // Converter helpers for Joi types.
+
 let TYPES = {
 
   alternatives: (schema, joi) => {
@@ -142,7 +143,6 @@ let TYPES = {
     schema.properties = {};
     schema.additionalProperties = joi._flags.allowUnknown || false;
 
-
     if (!joi._inner.children) {
       return schema;
     }
@@ -164,8 +164,12 @@ let TYPES = {
 export default function convert(joi,transformer=null) {
 
   assert('object'===typeof joi && true === joi.isJoi, 'requires a joi schema object');
-  assert(joi._type, 'has type');
-  assert(TYPES[joi._type], `cannot convert ${joi._type}`);
+
+  assert(joi._type, 'joi schema object must have a type');
+
+  if(!TYPES[joi._type]){
+    throw new Error(`sorry, do not know how to convert unknown joi type: "${joi._type}"`);
+  }
 
   if(transformer){
     assert('function'===typeof transformer, 'transformer must be a function');
@@ -182,10 +186,7 @@ export default function convert(joi,transformer=null) {
   if (joi._flags && joi._flags.default) {
     schema['default'] = joi._flags.default;
   }
-/*
-  if(joi._flags && joi._flags.allowOnly){
-    schema.enum = joi._valids._set
-  }*/
+
   if (joi._valids && joi._valids._set && joi._valids._set.length){
     if(Array.isArray(joi._inner.children)) {
       return {

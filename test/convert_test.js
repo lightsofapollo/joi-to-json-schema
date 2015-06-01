@@ -359,43 +359,8 @@ suite('convert', function () {
           anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
         }),
         schema = convert(joi),
-        expected = {
-          type: 'object',
-          properties: {
-            aFormattedString: {
-              type: 'string',
-              pattern: '^[ABC]_\\w+$'
-            },
-            aFloat: {
-              'default': 0.8,
-              type: 'number',
-              minimum: 0,
-              maximum: 1
-            },
-            anInt: {
-              type: 'number',
-              exclusiveMinimum: true,
-              minimum: 0
-            },
-            anArrayOfFloats: {
-              type: 'array',
-              items: [
-                {
-                  'default': 0.8,
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 1
-                }
-              ]
-            },
-            anArrayOfNumbersOrStrings: {
-              type: 'array',
-              items: [{oneOf: [{type: 'number'}, {type: 'string'}]}]
-            }
-          },
-          additionalProperties: false,
-          required: ['anInt']
-        };
+        expected = require('./fixtures/complicated.json');
+
     assert.validate(schema, expected);
 
     // now make it fail
@@ -405,7 +370,7 @@ suite('convert', function () {
       assert.validate(schema,expected);
     }
     catch(e){
-      console.warn(e);
+      //console.warn(e);
       if(e.name !== 'AssertionError' && e.operator !== 'deepEqual'){
         throw e;
       }

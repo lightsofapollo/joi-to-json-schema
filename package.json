@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/lightsofapollo/joi-to-json-schema",
   "devDependencies": {
-    "6to5": "^2.2.0",
-    "joi": "^5.0.2",
+    "6to5": "^3.6.5",
+    "joi": "^6.4.3",
     "json-schema": "^0.2.2",
     "lodash": "^3.9.3",
-    "mocha": "^2.1.0"
+    "mocha": "^2.2.5"
   }
 }

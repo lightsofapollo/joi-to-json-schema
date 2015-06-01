@@ -331,7 +331,7 @@ suite('convert', function () {
   });
 
   test('array inclusions', function () {
-    let joi = Joi.array().includes(Joi.string()),
+    let joi = Joi.array().items(Joi.string()),
         schema = convert(joi),
         expected = {
           type: 'array',
@@ -355,8 +355,8 @@ suite('convert', function () {
           aFloat: Joi.number().default(0.8).min(0.0).max(1.0),
           anInt: Joi.number().required().precision(0).greater(0),
           aForbiddenString: Joi.string().forbidden(),
-          anArrayOfFloats: Joi.array().includes(Joi.number().default(0.8).min(0.0).max(1.0)),
-          anArrayOfNumbersOrStrings: Joi.array().includes(Joi.alternatives(Joi.number(), Joi.string()))
+          anArrayOfFloats: Joi.array().items(Joi.number().default(0.8).min(0.0).max(1.0)),
+          anArrayOfNumbersOrStrings: Joi.array().items(Joi.alternatives(Joi.number(), Joi.string()))
         }),
         schema = convert(joi),
         expected = require('./fixtures/complicated.json');

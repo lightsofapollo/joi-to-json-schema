@@ -161,6 +161,14 @@ let TYPES = {
   }
 };
 
+/**
+ * Converts the supplied joi validation object into a JSON schema object,
+ * optionally applying a transformation.
+ *
+ * @param {JoiValidation} joi
+ * @param {TransformFunction} [transformer=null]
+ * @returns {JSONSchema}
+ */
 export default function convert(joi,transformer=null) {
 
   assert('object'===typeof joi && true === joi.isJoi, 'requires a joi schema object');
@@ -210,3 +218,19 @@ export default function convert(joi,transformer=null) {
 
   return result;
 }
+
+/**
+ * Joi Validation Object
+ * @typedef {object} JoiValidation
+ */
+
+/**
+ * Transformation Function - applied just before `convert()` returns and called as `function(object):object`
+ * @typedef {function} TransformFunction
+ */
+
+/**
+ * JSON Schema Object
+ * @typedef {object} JSONSchema
+ */
+

@@ -5,6 +5,17 @@ Schema (draft-04) with the understanding that only some of Joi's schematics
 can be converted directly. Primarily this module exists to convert Joi schema 
 objects for existing tools which happen to currently consume JSON Schema.
 
+[![npm version](https://badge.fury.io/js/joi-to-json-schema.svg)](http://badge.fury.io/js/joi-to-json-schema)
+[![Build Status](https://travis-ci.org/raisch/joi-to-json-schema.svg?branch=master)](https://travis-ci.org/raisch/joi-to-json-schema)
+[![Dependencies Status](https://david-dm.org/raisch/joi-to-json-schema.svg)](https://david-dm.org/raisch/joi-to-json-schema)
+[![DevDependencies Status](https://david-dm.org/raisch/joi-to-json-schema/dev-status.svg)](https://david-dm.org/raisch/joi-to-json-schema#info=devDependencies)
+
+
+## Installation
+> npm install joi-to-json
+
+
+
 ## Usage
 
 ```js
@@ -37,15 +48,50 @@ which will produce:
   required: [ 'name', 'a' ] }
 ```
 
+## JSDOC
+
+```javascript
+ /**
+  * Converts the supplied joi validation object into a JSON schema object,
+  * optionally applying a transformation.
+  *
+  * @param {JoiValidation} joi
+  * @param {TransformFunction} [transformer=null]
+  * @returns {JSONSchema}
+  */
+ export default function convert(joi,transformer=null) {
+   // ...
+ };
+
+ /**
+  * Joi Validation Object
+  * @typedef {object} JoiValidation
+  */
+
+ /**
+  * Transformation Function - applied just before `convert()` returns and called as `function(object):object`
+  * @typedef {function} TransformFunction
+  */
+
+ /**
+  * JSON Schema Object
+  * @typedef {object} JSONSchema
+  */
+```
+
 ## Notes
 
 Joi's conditional form, i.e. `.when('name',{is:cond,then:joi,otherwise:joi})`, is evaluated at runtime 
-and since there is no way of knowing what the condition might resolve to, from the perspective of the schema, this 
-module takes the position that it should provide both resolutions in a JSON Schema `oneOf:[]` clause.
+and since, from the perspective of the schema, there is no way of knowing what the condition might resolve to, this
+module takes the position that it should provide _all possible resolutions_ in a JSON Schema `oneOf:[]` clause.
+
+Also, while it does not affect consumers, it should be noted that `joi-to-json-schema` is written in ES6 and uses
+[6-to-5](https://www.npmjs.com/package/6to5) to convert to ES5 before the module is published to `npm`.
 
 ## Testing
 
-All tests cases are first checked against expected results and then validated using [Kris Zyp's json-schema](https://github.com/kriszyp/json-schema)
+All tests cases are first checked against expected results and then validated using
+[Kris Zyp's json-schema](https://github.com/kriszyp/json-schema)
 
 ## References
 

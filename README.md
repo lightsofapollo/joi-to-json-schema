@@ -6,9 +6,9 @@ can be converted directly. Primarily this module exists to convert Joi schema
 objects for existing tools which happen to currently consume JSON Schema.
 
 [![npm version](https://badge.fury.io/js/joi-to-json-schema.svg)](http://badge.fury.io/js/joi-to-json-schema)
-[![Build Status](https://travis-ci.org/raisch/joi-to-json-schema.svg?branch=master)](https://travis-ci.org/raisch/joi-to-json-schema)
-[![Dependencies Status](https://david-dm.org/raisch/joi-to-json-schema.svg)](https://david-dm.org/raisch/joi-to-json-schema)
-[![DevDependencies Status](https://david-dm.org/raisch/joi-to-json-schema/dev-status.svg)](https://david-dm.org/raisch/joi-to-json-schema#info=devDependencies)
+[![Build Status](https://travis-ci.org/lightsofapollo/joi-to-json-schema.svg?branch=master)](https://travis-ci.org/lightsofapollo/joi-to-json-schema)
+[![Dependencies Status](https://david-dm.org/lightsofapollo/joi-to-json-schema.svg)](https://david-dm.org/lightsofapollo/joi-to-json-schema)
+[![DevDependencies Status](https://david-dm.org/lightsofapollo/joi-to-json-schema/dev-status.svg)](https://david-dm.org/lightsofapollo/joi-to-json-schema#info=devDependencies)
 
 
 ## Installation

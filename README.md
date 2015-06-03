@@ -10,6 +10,9 @@ objects for existing tools which happen to currently consume JSON Schema.
 [![Dependencies Status](https://david-dm.org/lightsofapollo/joi-to-json-schema.svg)](https://david-dm.org/lightsofapollo/joi-to-json-schema)
 [![DevDependencies Status](https://david-dm.org/lightsofapollo/joi-to-json-schema/dev-status.svg)](https://david-dm.org/lightsofapollo/joi-to-json-schema#info=devDependencies)
 
+[![NPM](https://nodei.co/npm/joi-to-json-schema.png)](https://nodei.co/npm/joi-to-json-schema/)
+[![NPM](https://nodei.co/npm-dl/joi-to-json-schema.png)](https://nodei.co/npm-dl/joi-to-json-schema/)
+
 
 ## Installation
 > npm install joi-to-json

@@ -94,7 +94,7 @@ Also, while it does not affect consumers, it should be noted that `joi-to-json-s
 ## Testing
 
 All tests cases are first checked against expected results and then validated using
-[Kris Zyp's json-schema](https://github.com/kriszyp/json-schema)
+Kris Zyp's excellent [json-schema](https://github.com/kriszyp/json-schema)
 
 ## References
 

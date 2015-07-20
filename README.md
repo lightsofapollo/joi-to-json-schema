@@ -33,9 +33,9 @@ var joi = require('joi'),
         then: joi.string().default('a is true'),
         otherwise: joi.number().default(0)
       })
-    }),
+    });
 
-    convert(joiSchema);
+convert(joiSchema);
 ```
 
 which will produce:

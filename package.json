@@ -1,6 +1,6 @@
 {
   "name": "joi-to-json-schema",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Joi -> JSON Schema Converter",
   "main": "build/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/lightsofapollo/joi-to-json-schema",
   "devDependencies": {
     "6to5": "^3.6.5",
-    "joi": "^6.4.3",
+    "joi": "^6.6.0",
     "json-schema": "^0.2.2",
     "lodash": "^3.9.3",
     "mocha": "^2.2.5"

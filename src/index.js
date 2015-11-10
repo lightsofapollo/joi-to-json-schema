@@ -38,7 +38,7 @@ let TYPES = {
     schema.format = 'date-time';
     return schema;
   },
-  
+
   any: (schema) => {
     schema.type = [
       "array",
@@ -71,11 +71,20 @@ let TYPES = {
       }
     });
 
-    if (joi._inner && joi._inner.inclusions && joi._inner.inclusions.length>0) {
-      schema.items = schema.items || [];
-      joi._inner.inclusions.forEach((i)=> {
-        schema.items.push(convert(i));
-      });
+    if (joi._inner) {
+      let list;
+      if (joi._inner.inclusions.length) {
+        list = joi._inner.inclusions;
+      } else if (joi._inner.requireds.length) {
+        list = joi._inner.requireds;
+      }
+
+      if (list) {
+        schema.items = schema.items || [];
+        list.forEach((i) => {
+          schema.items.push(convert(i));
+        });
+      }
     }
 
     return schema;
@@ -190,7 +199,7 @@ export default function convert(joi,transformer=null) {
   if (joi._description) {
     schema.description = joi._description;
   }
-  
+
   if (joi._flags && joi._flags.default) {
     schema['default'] = joi._flags.default;
   }
@@ -233,4 +242,3 @@ export default function convert(joi,transformer=null) {
  * JSON Schema Object
  * @typedef {object} JSONSchema
  */
-

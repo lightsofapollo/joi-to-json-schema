@@ -141,6 +141,9 @@ let TYPES = {
         case 'length':
           schema.minLength = schema.maxLength = test.arg;
           break;
+        case 'uri':
+          schema.format = 'uri';
+          break;
       }
     });
 

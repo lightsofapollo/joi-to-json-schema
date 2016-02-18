@@ -234,6 +234,16 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('string uri', function () {
+    var joi = Joi.string().uri(),
+        schema = convert(joi),
+        expected = {
+          type: 'string',
+          format: 'uri'
+        };
+    assert.validate(schema, expected);
+  });
+
   test('date', function () {
     var joi = Joi.date(),
         schema = convert(joi),

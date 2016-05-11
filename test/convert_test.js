@@ -35,6 +35,18 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('object label', function () {
+    var joi = Joi.object().label('Title'),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          title: 'Title',
+          properties: {},
+          additionalProperties: false,
+        };
+    assert.validate(schema, expected);
+  });
+
   test('object description', function () {
     var joi = Joi.object().description('woot'),
         schema = convert(joi),

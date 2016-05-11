@@ -203,6 +203,11 @@ export default function convert(joi,transformer=null) {
     schema.description = joi._description;
   }
 
+  // Add the label as a title if it exists
+  if (joi._settings && joi._settings.language && joi._settings.language.label) {
+    schema.title = joi._settings.language.label;
+  }
+
   if (joi._flags && joi._flags.default) {
     schema['default'] = joi._flags.default;
   }

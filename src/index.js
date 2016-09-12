@@ -208,7 +208,8 @@ export default function convert(joi,transformer=null) {
     schema.title = joi._settings.language.label;
   }
 
-  if (joi._flags && joi._flags.default) {
+  // Checking for undefined and null explicitly to allow false and 0 values
+  if (joi._flags && joi._flags.default !== undefined && joi._flags.default !== null) {
     schema['default'] = joi._flags.default;
   }
 

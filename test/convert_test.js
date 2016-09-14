@@ -413,14 +413,18 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {
-            a: {type: 'boolean'},
+            a: {
+              type: 'boolean',
+              default: false
+            },
             b: {
               oneOf: [
                 {
                   'default': 'a is true',
                   type: 'string'
                 }, {
-                  type: 'number'
+                  type: 'number',
+                  default: 0
                 }
               ]
             }

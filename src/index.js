@@ -206,6 +206,8 @@ export default function convert(joi,transformer=null) {
   // Add the label as a title if it exists
   if (joi._settings && joi._settings.language && joi._settings.language.label) {
     schema.title = joi._settings.language.label;
+  } else if (joi._flags && joi._flags.label) {
+    schema.title = joi._flags.label;
   }
 
   // Checking for undefined and null explicitly to allow false and 0 values

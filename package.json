@@ -30,10 +30,10 @@
   "homepage": "https://github.com/lightsofapollo/joi-to-json-schema",
   "devDependencies": {
     "6to5": "^3.6.5",
-    "joi": "^6.6.0",
+    "joi": "^6.10.1",
     "json-schema": "^0.2.2",
-    "lodash": "^3.9.3",
-    "mocha": "^2.2.5"
+    "lodash": "^3.10.1",
+    "mocha": "^2.5.3"
   },
   "dependencies": {
     "joi": "^6.10.1",

@@ -42,6 +42,18 @@ suite('convert', function () {
           type: 'object',
           title: 'Title',
           properties: {},
+          additionalProperties: false
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('object options language label', function () {
+    var joi = Joi.object().options({language:{label: 'Title'}}),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          title: 'Title',
+          properties: {},
           additionalProperties: false,
         };
     assert.validate(schema, expected);

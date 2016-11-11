@@ -24,9 +24,9 @@ objects for existing tools which happen to currently consume JSON Schema.
 ```js
 var joi = require('joi'),
     convert = require('joi-to-json-schema'),
-    joiSchema=joi.object({
-      'name':joi.string().required().regex(/^\w+$/),
-      'description':joi.string().optional().default('no description provided'),
+    joiSchema = joi.object({
+      'name': joi.string().required().regex(/^\w+$/),
+      'description': joi.string().optional().default('no description provided'),
       'a': joi.boolean().required().default(false),
       'b': joi.alternatives().when('a', {
         is: true,

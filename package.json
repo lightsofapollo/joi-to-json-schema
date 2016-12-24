@@ -34,10 +34,5 @@
     "json-schema": "^0.2.2",
     "lodash": "^3.10.1",
     "mocha": "^2.5.3"
-  },
-  "dependencies": {
-    "joi": "^6.10.1",
-    "lodash": "^3.10.1",
-    "mocha": "^2.5.3"
   }
 }

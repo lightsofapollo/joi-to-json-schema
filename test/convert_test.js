@@ -30,6 +30,7 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -42,6 +43,7 @@ suite('convert', function () {
           type: 'object',
           title: 'Title',
           properties: {},
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -54,6 +56,7 @@ suite('convert', function () {
           type: 'object',
           title: 'Title',
           properties: {},
+          patterns: [],
           additionalProperties: true,
         };
     assert.validate(schema, expected);
@@ -65,6 +68,7 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
+          patterns: [],
           additionalProperties: true,
           description: 'woot'
         };
@@ -77,6 +81,7 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
+          patterns: [],
           additionalProperties: false
         };
     assert.validate(schema, expected);
@@ -88,6 +93,7 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -119,6 +125,7 @@ suite('convert', function () {
               type: 'boolean'
             }
           },
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -151,6 +158,7 @@ suite('convert', function () {
               type: 'boolean'
             }
           },
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -180,6 +188,7 @@ suite('convert', function () {
               type: 'boolean'
             }
           },
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -216,6 +225,7 @@ suite('convert', function () {
         schema = convert(joi),
         expected = {
           type: 'object',
+          patterns: [],
           additionalProperties: true,
           properties: {
             value: {
@@ -452,6 +462,7 @@ suite('convert', function () {
               ]
             }
           },
+          patterns: [],
           additionalProperties: true,
           required: ['a']
         };

@@ -70,6 +70,7 @@ suite('transform', function () {
         expected = {
           type: 'object',
           properties: {},
+          patterns: [],
           additionalProperties: true // false
         };
     assert.validate(schema, expected);

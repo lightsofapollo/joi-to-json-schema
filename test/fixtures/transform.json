@@ -29,6 +29,7 @@
                 }
               },
               "additionalProperties": true,
+              "patterns": [],
               "required": [
                 "name",
                 "size",
@@ -57,6 +58,7 @@
                 }
               },
               "additionalProperties": true,
+              "patterns": [],
               "required": [
                 "name",
                 "size",
@@ -77,6 +79,7 @@
     }
   },
   "additionalProperties": true,
+  "patterns": [],
   "required": [
     "name",
     "options"

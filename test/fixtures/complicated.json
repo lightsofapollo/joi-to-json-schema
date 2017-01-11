@@ -43,7 +43,8 @@
       ]
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
+  "patterns": [],
   "required": [
     "anInt"
   ]

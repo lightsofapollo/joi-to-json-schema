@@ -30,7 +30,8 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
-          additionalProperties: false
+          patterns: [],
+          additionalProperties: true
         };
     assert.validate(schema, expected);
   });
@@ -42,7 +43,8 @@ suite('convert', function () {
           type: 'object',
           title: 'Title',
           properties: {},
-          additionalProperties: false
+          patterns: [],
+          additionalProperties: true
         };
     assert.validate(schema, expected);
   });
@@ -54,7 +56,8 @@ suite('convert', function () {
           type: 'object',
           title: 'Title',
           properties: {},
-          additionalProperties: false,
+          patterns: [],
+          additionalProperties: true,
         };
     assert.validate(schema, expected);
   });
@@ -65,8 +68,21 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
-          additionalProperties: false,
+          patterns: [],
+          additionalProperties: true,
           description: 'woot'
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('object without unknown keys', function () {
+    var joi = Joi.object().unknown(false),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          properties: {},
+          patterns: [],
+          additionalProperties: false
         };
     assert.validate(schema, expected);
   });
@@ -77,6 +93,7 @@ suite('convert', function () {
         expected = {
           type: 'object',
           properties: {},
+          patterns: [],
           additionalProperties: true
         };
     assert.validate(schema, expected);
@@ -108,7 +125,8 @@ suite('convert', function () {
               type: 'boolean'
             }
           },
-          additionalProperties: false
+          patterns: [],
+          additionalProperties: true
         };
     assert.validate(schema, expected);
   });
@@ -140,7 +158,8 @@ suite('convert', function () {
               type: 'boolean'
             }
           },
-          additionalProperties: false
+          patterns: [],
+          additionalProperties: true
         };
     assert.validate(schema, expected);
   });
@@ -169,7 +188,8 @@ suite('convert', function () {
               type: 'boolean'
             }
           },
-          additionalProperties: false
+          patterns: [],
+          additionalProperties: true
         };
     assert.validate(schema, expected);
   });
@@ -205,7 +225,8 @@ suite('convert', function () {
         schema = convert(joi),
         expected = {
           type: 'object',
-          additionalProperties: false,
+          patterns: [],
+          additionalProperties: true,
           properties: {
             value: {
               oneOf: [
@@ -441,7 +462,8 @@ suite('convert', function () {
               ]
             }
           },
-          additionalProperties: false,
+          patterns: [],
+          additionalProperties: true,
           required: ['a']
         };
     //console.log('when: %s', util.inspect({type:joi._type,schema:schema}, {depth: 10}));

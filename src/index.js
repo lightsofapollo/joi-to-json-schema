@@ -153,7 +153,7 @@ let TYPES = {
   object: (schema, joi) => {
     schema.type = 'object';
     schema.properties = {};
-    schema.additionalProperties = joi._flags.allowUnknown || false;
+    schema.additionalProperties = joi._flags.allowUnknown !== false;
 
     if (!joi._inner.children) {
       return schema;

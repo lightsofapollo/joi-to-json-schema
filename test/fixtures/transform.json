@@ -28,7 +28,7 @@
                   "type": "string"
                 }
               },
-              "additionalProperties": false,
+              "additionalProperties": true,
               "required": [
                 "name",
                 "size",
@@ -56,7 +56,7 @@
                   "maximum": 20
                 }
               },
-              "additionalProperties": false,
+              "additionalProperties": true,
               "required": [
                 "name",
                 "size",
@@ -76,7 +76,7 @@
       ]
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": [
     "name",
     "options"

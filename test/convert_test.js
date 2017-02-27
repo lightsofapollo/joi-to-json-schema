@@ -395,6 +395,16 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('array ordered (tuple-like)', function () {
+    let joi = Joi.array().ordered(Joi.string().required(), Joi.number().optional()),
+        schema = convert(joi),
+        expected = {
+          type: 'array',
+          ordered: [{type: 'string'}, {type: 'number'}]
+        };
+    assert.validate(schema, expected);
+  });
+
   test('joi any', function () {
     let joi = Joi.any(),
         schema = convert(joi),

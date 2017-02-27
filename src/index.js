@@ -72,6 +72,10 @@ let TYPES = {
     });
 
     if (joi._inner) {
+      if (joi._inner.ordereds.length) {
+        schema.ordered = joi._inner.ordereds.map((item) => convert(item));
+      }
+
       let list;
       if (joi._inner.inclusions.length) {
         list = joi._inner.inclusions;
@@ -80,10 +84,7 @@ let TYPES = {
       }
 
       if (list) {
-        schema.items = schema.items || [];
-        list.forEach((i) => {
-          schema.items.push(convert(i));
-        });
+        schema.items = list.map((item) => convert(item));
       }
     }
 

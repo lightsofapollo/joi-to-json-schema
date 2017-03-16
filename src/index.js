@@ -243,6 +243,8 @@ export default function convert(joi,transformer=null) {
   return result;
 }
 
+module.exports = convert
+
 /**
  * Joi Validation Object
  * @typedef {object} JoiValidation

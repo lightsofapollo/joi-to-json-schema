@@ -4,7 +4,7 @@
   "description": "Joi -> JSON Schema Converter",
   "main": "build/index.js",
   "scripts": {
-    "build": "6to5 -s -e src --out-dir build",
+    "build": "babel -s --out-dir build src",
     "pretest": "npm run build",
     "test": "mocha",
     "prepublish": "npm run build"
@@ -29,7 +29,9 @@
   },
   "homepage": "https://github.com/lightsofapollo/joi-to-json-schema",
   "devDependencies": {
-    "6to5": "^3.6.5",
+    "babel-cli": "^6.24.0",
+    "babel-preset-latest": "^6.24.0",
+    "babel-register": "^6.24.0",
     "joi": "^6.10.1",
     "json-schema": "^0.2.2",
     "lodash": "^3.10.1",

@@ -154,7 +154,7 @@ let TYPES = {
   object: (schema, joi) => {
     schema.type = 'object';
     schema.properties = {};
-    schema.additionalProperties = joi._flags.allowUnknown !== false;
+    schema.additionalProperties = Boolean(joi._flags.allowUnknown);
     schema.patterns = joi._inner.patterns.map((pattern) => {
       return {regex: pattern.regex, rule: convert(pattern.rule)};
     });

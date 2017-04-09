@@ -18,29 +18,25 @@
     },
     "anArrayOfFloats": {
       "type": "array",
-      "items": [
-        {
-          "default": 0.8,
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        }
-      ]
+      "items": {
+        "default": 0.8,
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
     },
     "anArrayOfNumbersOrStrings": {
       "type": "array",
-      "items": [
-        {
-          "oneOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            }
-          ]
-        }
-      ]
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      }
     }
   },
   "additionalProperties": false,

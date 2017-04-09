@@ -390,7 +390,7 @@ suite('convert', function () {
         schema = convert(joi),
         expected = {
           type: 'array',
-          items: [{type: 'string'}]
+          items: {type: 'string'}
         };
     assert.validate(schema, expected);
   });
@@ -481,4 +481,3 @@ suite('convert', function () {
   });
 
 });
-

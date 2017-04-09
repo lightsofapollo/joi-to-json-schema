@@ -84,7 +84,7 @@ let TYPES = {
       }
 
       if (list) {
-        schema.items = list.map((item) => convert(item));
+        schema.items = convert(list[0]);
       }
     }
 

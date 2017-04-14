@@ -88,9 +88,6 @@ Joi's conditional form, i.e. `.when('name',{is:cond,then:joi,otherwise:joi})`, i
 and since, from the perspective of the schema, there is no way of knowing what the condition might resolve to, this
 module takes the position that it should provide _all possible resolutions_ in a JSON Schema `oneOf:[]` clause.
 
-Also, while it does not affect consumers, it should be noted that `joi-to-json-schema` is written in ES6 and uses
-[6-to-5](https://www.npmjs.com/package/6to5) to convert to ES5 before the module is published to `npm`.
-
 ## Testing
 
 All tests cases are first checked against expected results and then validated using

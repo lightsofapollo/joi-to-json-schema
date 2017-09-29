@@ -75,6 +75,19 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('object example', function () {
+    var joi = Joi.object().example({ key: 'value' }),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          properties: {},
+          patterns: [],
+          additionalProperties: false,
+          examples: [{ key: 'value' }]
+        };
+    assert.validate(schema, expected);
+  });
+
   test('object without unknown keys', function () {
     var joi = Joi.object().unknown(false),
         schema = convert(joi),

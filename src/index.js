@@ -207,6 +207,10 @@ export default function convert(joi,transformer=null) {
     schema.description = joi._description;
   }
 
+  if (joi._examples && joi._examples.length > 0) {
+    schema.examples = joi._examples;
+  }
+
   // Add the label as a title if it exists
   if (joi._settings && joi._settings.language && joi._settings.language.label) {
     schema.title = joi._settings.language.label;

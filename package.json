@@ -23,6 +23,13 @@
   "maintainers": [
     "Rob Raisch [:raisch]"
   ],
+  "contributors": [
+    {
+      "name" : "MooYeol Prescott Lee",
+      "email" : "mooyoul@gmail.com",
+      "url" : "https://github.com/mooyoul"
+    }
+  ],
   "license": "Apache2",
   "bugs": {
     "url": "https://github.com/lightsofapollo/joi-to-json-schema/issues"

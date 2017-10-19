@@ -2,6 +2,5 @@ language: node_js
 node_js:
   - node # latest stable Node.js release
   - "lts/*" # latest LTS Node.js release, currently, active lts version is 6.
-  - 4 # Minimum node.js version that yarn supported
 install:
   - yarn --ignore-engines

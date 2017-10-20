@@ -75,15 +75,28 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
-  test('object example', function () {
-    var joi = Joi.object().example({ key: 'value' }),
+  test('object examples', function () {
+    var joi = Joi.object().example({ key: 'value', key2: 'value2' }),
         schema = convert(joi),
         expected = {
           type: 'object',
           properties: {},
           patterns: [],
           additionalProperties: false,
-          examples: [{ key: 'value' }]
+          examples: [{ key: 'value', key2: 'value2' }]
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('object example', function () {
+    var joi = Joi.object().example({ key: 'value'}),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          properties: {},
+          patterns: [],
+          additionalProperties: false,
+          example: { key: 'value'}
         };
     assert.validate(schema, expected);
   });

@@ -312,6 +312,24 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('date (javascript timestamp)', function () {
+    var joi = Joi.date().timestamp(),
+        schema = convert(joi),
+        expected = {
+          type: 'integer',
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('date (unix timestamp)', function () {
+    var joi = Joi.date().timestamp('unix'),
+      schema = convert(joi),
+      expected = {
+        type: 'integer',
+      };
+    assert.validate(schema, expected);
+  });
+
   test('string regex -> pattern', function () {
     let joi = Joi.string().regex(/^[a-z]$/),
         schema = convert(joi),

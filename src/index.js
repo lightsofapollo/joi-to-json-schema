@@ -33,7 +33,12 @@ let TYPES = {
     return schema;
   },
 
-  date: (schema) => {
+  date: (schema, joi) => {
+    if (joi._flags.timestamp) {
+      schema.type = 'integer';
+      return schema;
+    }
+
     schema.type = 'string';
     schema.format = 'date-time';
     return schema;
@@ -131,7 +136,19 @@ let TYPES = {
           schema.format = 'email';
           break;
         case 'regex':
-          schema.pattern = String(test.arg).replace(/^\//,'').replace(/\/$/,'');
+          // for backward compatibility
+          const arg = test.arg;
+
+          // This is required for backward compatibility
+          // Location "pattern" had changed since Joi v9.0.0
+          //
+          // For example:
+          //
+          // before Joi v9: test.arg
+          // since Joi v9: test.arg.pattern
+
+          const pattern = arg && arg.pattern ? arg.pattern : arg;
+          schema.pattern = String(pattern).replace(/^\//,'').replace(/\/$/,'');
           break;
         case 'min':
           schema.minLength = test.arg;

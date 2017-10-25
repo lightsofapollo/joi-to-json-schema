@@ -83,6 +83,7 @@ suite('convert', function () {
           properties: {},
           patterns: [],
           additionalProperties: false,
+          example: { key: 'value' },
           examples: [{ key: 'value' }]
         };
     assert.validate(schema, expected);

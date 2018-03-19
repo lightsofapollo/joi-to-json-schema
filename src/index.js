@@ -268,7 +268,8 @@ export default function convert(joi,transformer=null) {
   return result;
 }
 
-module.exports = convert
+module.exports = exports = convert;
+convert.TYPES = TYPES;
 
 /**
  * Joi Validation Object

@@ -4,14 +4,14 @@ import assert from 'assert';
 
 let TYPES = {
 
-  alternatives: (schema, joi) => {
+  alternatives: (schema, joi, transformer) => {
 
     var result = schema.oneOf = [];
 
     joi._inner.matches.forEach(function (match) {
 
       if (match.schema) {
-        return result.push(convert(match.schema));
+        return result.push(convert(match.schema, transformer));
       }
 
       if (!match.is) {
@@ -22,11 +22,11 @@ let TYPES = {
       }
 
       if (match.then) {
-        result.push(convert(match.then));
+        result.push(convert(match.then, transformer));
       }
 
       if (match.otherwise) {
-        result.push(convert(match.otherwise));
+        result.push(convert(match.otherwise, transformer));
       }
 
     });
@@ -56,7 +56,7 @@ let TYPES = {
     return schema;
   },
 
-  array: (schema, joi) => {
+  array: (schema, joi, transformer) => {
     schema.type = 'array';
 
     joi._tests.forEach((test) => {
@@ -78,7 +78,7 @@ let TYPES = {
 
     if (joi._inner) {
       if (joi._inner.ordereds.length) {
-        schema.ordered = joi._inner.ordereds.map((item) => convert(item));
+        schema.ordered = joi._inner.ordereds.map((item) => convert(item, transformer));
       }
 
       let list;
@@ -89,7 +89,7 @@ let TYPES = {
       }
 
       if (list) {
-        schema.items = convert(list[0]);
+        schema.items = convert(list[0], transformer);
       }
     }
 
@@ -168,12 +168,12 @@ let TYPES = {
     return schema;
   },
 
-  object: (schema, joi) => {
+  object: (schema, joi, transformer) => {
     schema.type = 'object';
     schema.properties = {};
     schema.additionalProperties = Boolean(joi._flags.allowUnknown);
     schema.patterns = joi._inner.patterns.map((pattern) => {
-      return {regex: pattern.regex, rule: convert(pattern.rule)};
+      return {regex: pattern.regex, rule: convert(pattern.rule, transformer)};
     });
 
     if (!joi._inner.children) {
@@ -182,7 +182,7 @@ let TYPES = {
 
     joi._inner.children.forEach((property) => {
       if(property.schema._flags.presence !== 'forbidden') {
-        schema.properties[property.key] = convert(property.schema);
+        schema.properties[property.key] = convert(property.schema, transformer);
         if (property.schema._flags.presence === 'required') {
           schema.required = schema.required || [];
           schema.required.push(property.key);
@@ -252,17 +252,17 @@ export default function convert(joi,transformer=null) {
             'type': joi._type,
             'enum': joi._valids._set
           },
-          TYPES[joi._type](schema, joi)
+          TYPES[joi._type](schema, joi, transformer)
         ]
       };
     }
     schema['enum']=joi._valids._set;
   }
 
-  let result = TYPES[joi._type](schema, joi);
+  let result = TYPES[joi._type](schema, joi, transformer);
 
   if(transformer){
-    result = transformer(result);
+    result = transformer(result, joi);
   }
 
   return result;

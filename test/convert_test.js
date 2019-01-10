@@ -446,6 +446,28 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('joi binary with content encoding', function () {
+    let joi = Joi.binary().encoding('base64'),
+      schema = convert(joi),
+      expected = {
+        type: 'string',
+        contentMediaType: 'text/plain',
+        contentEncoding: 'base64'
+      };
+    assert.validate(schema, expected);
+  });
+
+  test('joi binary with content type', function () {
+    let joi = Joi.binary().meta({ contentMediaType: 'image/png' }),
+      schema = convert(joi),
+      expected = {
+        type: 'string',
+        contentMediaType: 'image/png',
+        contentEncoding: 'binary'
+      };
+    assert.validate(schema, expected);
+  });
+
   test('big and complicated', function () {
     let joi = Joi.object({
           aFormattedString: Joi.string().regex(/^[ABC]_\w+$/),

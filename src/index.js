@@ -254,7 +254,7 @@ export default function convert(joi,transformer=null) {
   if (joi._valids && joi._valids._set && joi._valids._set.size) {
     if(Array.isArray(joi._inner.children) || !joi._flags.allowOnly) {
       return {
-        '------oneOf': [
+        'oneOf': [
           {
             'type': joi._type,
             'enum': [...joi._valids._set]

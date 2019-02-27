@@ -341,7 +341,7 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
-  test('string allow', function () {
+  test.only('string allow', function () {
     let joi = Joi.string().allow(['a', 'b', '', null]),
         schema = convert(joi),
         expected = {

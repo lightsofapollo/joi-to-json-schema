@@ -251,8 +251,9 @@ export default function convert(joi,transformer=null) {
     schema['default'] = joi._flags.default;
   }
 
-  if (joi._valids && joi._valids._set && joi._valids._set.length){
-    if(Array.isArray(joi._inner.children)) {
+  if (joi._valids && joi._valids._set && joi._valids._set.length) {
+    console.log('came here');
+    if(Array.isArray(joi._inner.children) || !joi._flags.allowOnly) {
       return {
         '------oneOf': [
           {

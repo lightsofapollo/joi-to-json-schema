@@ -12,7 +12,7 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "oneOf": [
+                  "anyOf": [
                     {
                       "enum": [
                         "",

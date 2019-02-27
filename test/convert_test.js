@@ -345,7 +345,7 @@ suite('convert', function () {
     let joi = Joi.string().allow(['a', 'b', '', null]),
         schema = convert(joi),
         expected = {
-          "oneOf": [
+          "anyOf": [
             {
               enum: [
                 'a',

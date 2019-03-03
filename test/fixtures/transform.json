@@ -12,11 +12,18 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "enum": [
-                    "",
-                    "foo"
-                  ],
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "",
+                        "foo"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
                 },
                 "size": {
                   "enum": [

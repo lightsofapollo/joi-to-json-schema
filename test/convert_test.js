@@ -345,8 +345,20 @@ suite('convert', function () {
     let joi = Joi.string().allow(['a', 'b', '', null]),
         schema = convert(joi),
         expected = {
-          type: 'string',
-          'enum': ['a', 'b', '', null]
+          "anyOf": [
+            {
+              enum: [
+                'a',
+                'b',
+                '',
+                null,
+              ],
+              type: 'string'
+            },
+            {
+              type: 'string'
+            }
+          ]
         };
     //console.log('string allow: %s', util.inspect({type: joi._type, joi:joi, schema: schema}, {depth: 10}));
     assert.validate(schema, expected);

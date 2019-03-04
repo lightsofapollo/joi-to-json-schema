@@ -388,6 +388,16 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('number precision', function () {
+    let joi = Joi.number().precision(2),
+        schema = convert(joi),
+        expected = {
+          type: 'number',
+          multipleOf: 0.01
+        };
+    assert.validate(schema, expected);
+  });
+
   test('integer', function () {
     var joi = Joi.number().integer(),
         schema = convert(joi),

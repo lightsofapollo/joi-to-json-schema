@@ -129,6 +129,15 @@ let TYPES = {
         case 'max':
           schema.maximum = test.arg;
           break;
+        case 'precision':
+          let multipleOf 
+          if (test.arg > 1) {
+            multipleOf = JSON.parse('0.' + '0'.repeat((test.arg - 1)) + '1');
+          } else {
+            multipleOf = 1;
+          }
+          schema.multipleOf = multipleOf;
+          break;
       }
     });
     return schema;

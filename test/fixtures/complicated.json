@@ -14,7 +14,8 @@
     "anInt": {
       "type": "number",
       "exclusiveMinimum": true,
-      "minimum": 0
+      "minimum": 0,
+      "multipleOf": 1 
     },
     "anArrayOfFloats": {
       "type": "array",

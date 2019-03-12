@@ -187,7 +187,7 @@ let TYPES = {
   object: (schema, joi, transformer) => {
     schema.type = 'object';
     schema.properties = {};
-    schema.additionalProperties = Boolean(joi._flags.allowUnknown);
+    schema.additionalProperties = Boolean(joi._flags.allowUnknown || (joi._flags.allowUnknown === undefined && !joi._inner.children));
     schema.patterns = joi._inner.patterns.map((pattern) => {
       return {regex: pattern.regex, rule: convert(pattern.rule, transformer)};
     });

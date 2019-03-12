@@ -31,6 +31,18 @@ suite('convert', function () {
           type: 'object',
           properties: {},
           patterns: [],
+          additionalProperties: true,
+        };
+    assert.validate(schema, expected);
+  });
+
+  test('empty object will not allow additional properties', function () {
+    var joi = Joi.object({}),
+        schema = convert(joi),
+        expected = {
+          type: 'object',
+          properties: {},
+          patterns: [],
           additionalProperties: false,
         };
     assert.validate(schema, expected);
@@ -44,7 +56,7 @@ suite('convert', function () {
           title: 'Title',
           properties: {},
           patterns: [],
-          additionalProperties: false,
+          additionalProperties: true,
         };
     assert.validate(schema, expected);
   });
@@ -57,7 +69,7 @@ suite('convert', function () {
           title: 'Title',
           properties: {},
           patterns: [],
-          additionalProperties: false,
+          additionalProperties: true,
         };
     assert.validate(schema, expected);
   });
@@ -69,7 +81,7 @@ suite('convert', function () {
           type: 'object',
           properties: {},
           patterns: [],
-          additionalProperties: false,
+          additionalProperties: true,
           description: 'woot'
         };
     assert.validate(schema, expected);
@@ -82,7 +94,7 @@ suite('convert', function () {
           type: 'object',
           properties: {},
           patterns: [],
-          additionalProperties: false,
+          additionalProperties: true,
           example: { key: 'value' },
           examples: [{ key: 'value' }]
         };

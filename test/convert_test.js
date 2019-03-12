@@ -108,7 +108,7 @@ suite('convert', function () {
           type: 'object',
           properties: {},
           patterns: [],
-          additionalProperties: false,
+          additionalProperties: true,
         };
     assert.validate(schema, expected);
   });

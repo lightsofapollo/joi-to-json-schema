@@ -8,7 +8,7 @@
 /* global suite, test */
 
 //@formatter:off
-var Joi         = require('joi'),
+var Joi         = require('@hapi/joi'),
     convert     = require('../src/index'),
     assert      = require('assert'),
     jsonSchema  = require('json-schema'),

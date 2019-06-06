@@ -201,7 +201,7 @@ let TYPES = {
         schema.properties[property.key] = convert(property.schema, transformer);
         if (
             (property.schema._flags.presence === 'required') ||
-            (joi._settings && joi._settings.presence === 'required'
+            (property.schema._settings && property.schema._settings.presence === 'required'
                 && property.schema._flags.presence !== 'optional')
         ) {
           schema.required = schema.required || [];

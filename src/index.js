@@ -130,7 +130,7 @@ let TYPES = {
           schema.maximum = test.arg;
           break;
         case 'precision':
-          let multipleOf 
+          let multipleOf;
           if (test.arg > 1) {
             multipleOf = JSON.parse('0.' + '0'.repeat((test.arg - 1)) + '1');
           } else {
@@ -199,7 +199,11 @@ let TYPES = {
     joi._inner.children.forEach((property) => {
       if(property.schema._flags.presence !== 'forbidden') {
         schema.properties[property.key] = convert(property.schema, transformer);
-        if (property.schema._flags.presence === 'required') {
+        if (
+            (property.schema._flags.presence === 'required') ||
+            (property.schema._settings && property.schema._settings.presence === 'required'
+                && property.schema._flags.presence !== 'optional')
+        ) {
           schema.required = schema.required || [];
           schema.required.push(property.key);
         }
@@ -241,11 +245,11 @@ export default function convert(joi,transformer=null) {
   }
 
   if (joi._examples && joi._examples.length > 0) {
-    schema.examples = joi._examples;
-  } 
-  
+    schema.examples = joi._examples.map(e => e.value);
+  }
+
   if (joi._examples && joi._examples.length === 1) {
-    schema.example = joi._examples[0];
+    schema.example = joi._examples[0].value;
   }
 
   // Add the label as a title if it exists
@@ -284,7 +288,7 @@ export default function convert(joi,transformer=null) {
   return result;
 }
 
-module.exports = exports = convert;
+module.exports = convert;
 convert.TYPES = TYPES;
 
 /**

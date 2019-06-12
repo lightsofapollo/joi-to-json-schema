@@ -1,5 +1,5 @@
 //@formatter:off
-var Joi         = require('joi'),
+var Joi         = require('@hapi/joi'),
     convert     = require('../src/index'),
     assert      = require('assert'),
     jsonSchema  = require('json-schema');
@@ -568,4 +568,29 @@ suite('convert', function () {
     assert.validate(schema, expected);
   });
 
+  test('joi.options.presence = required', function () {
+      const reqJoi = Joi.defaults(schema => schema.options({
+          presence: 'required'
+      }));
+      const schema = reqJoi.object({
+          'name': reqJoi.string(),
+          'desc': reqJoi.string().optional()
+      });
+      assert.validate(convert(schema), {
+          additionalProperties: false,
+          patterns: [],
+          properties: {
+              name: {
+                  type: "string"
+              },
+              desc: {
+                  type: "string"
+              }
+          },
+          required: [
+              "name"
+          ],
+          type: "object"
+      });
+  });
 });
